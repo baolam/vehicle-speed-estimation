@@ -1,0 +1,4 @@
+{
+    "over_speed" : 100,
+    "srv_address" : "http://localhost:3000"
+}

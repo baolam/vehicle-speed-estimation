@@ -1,0 +1,34 @@
+{
+    "total_trackers" : 30,
+    "track_method" : {
+        "track_activation_threshold": 0.25,
+        "lost_track_buffer": 30,
+        "minimum_matching_threshold": 0.6,
+        "frame_rate": 30,
+        "minimum_consecutive_frames":1
+    },
+    "limited_frame" : 25,
+    "polygon_zone" : {
+        "tl" : [1252, 787],
+        "tr" : [2298, 803],
+        "bl" : [5039, 2159],
+        "br" : [-550, 2159]
+    },
+    "actual_length" : {
+        "width" : 25,
+        "height" : 250
+    },
+    "detections" : {
+        "confidence_threshold" : 0.15,
+        "accepted_classes" : [2, 3, 7],
+        "nms_method" : {
+            "threshold" : 0.5,
+            "class_agnostic" : false
+        }
+    },
+    "write_video" : {
+        "should" : true,
+        "folder_path" : "result"
+    },
+    "min_takes" : 10
+}

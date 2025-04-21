@@ -1,0 +1,12 @@
+devices/env
+devices/test/*.mp4
+devices/test/*.avi
+devices/model/*
+devices/result/*
+devices/resources/*
+layout/node_modules
+phone/node_modules
+phone/.expo
+phone/dist
+phone/web-build
+server/node_modules

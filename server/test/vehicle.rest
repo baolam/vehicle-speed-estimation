@@ -1,0 +1,15 @@
+@API = http://localhost:3000/api/vehicle
+@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0MjA5NjcxMywiZXhwIjoxNzQyMTM5OTEzfQ.Rd3tf23a5-K5QBDm53ofScAPikn23c1TzW9YSnqlss4
+
+### Lấy thông tin phương tiện
+GET {{API}}/
+Authorization: Bearer {{TOKEN}}
+
+### Tạo một phương tiện mới
+POST {{API}}/
+Authorization: Bearer {{TOKEN}}
+Content-Type: application/json
+
+{
+    "licensePlate" : "49AA-456.56"
+}

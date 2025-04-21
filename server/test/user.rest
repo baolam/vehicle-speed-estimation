@@ -1,0 +1,25 @@
+@API = http://localhost:3000/api/user
+@TOKEN =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0MjA5NjcxMywiZXhwIjoxNzQyMTM5OTEzfQ.Rd3tf23a5-K5QBDm53ofScAPikn23c1TzW9YSnqlss4
+
+### Đăng ký
+POST {{API}}/register
+Content-Type: application/json
+
+{
+    "name": "Nguyễn Đức Bảo Lâm",
+    "username" : "ndbl",
+    "password": "hahaha"
+}
+
+### Đăng nhập
+POST {{API}}/login
+Content-Type: application/json
+
+{
+    "username": "ndbl",
+    "password": "hahaha"
+}
+
+### Lấy toàn bộ thông tin
+GET {{API}}/all
+Authorization: Bearer {{TOKEN}}

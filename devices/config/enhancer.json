@@ -1,0 +1,15 @@
+{
+    "skip_enhancement" : false,
+    "gamma_infor" : {
+        "skip" : true,
+        "gamma" : 0.3
+    },
+    "adjust_general" : {
+        "skip" : true,
+        "brightness" : 10,
+        "contrast" : 2.3
+    },
+    "sharpen" : {
+        "skip" : false
+    }
+}
