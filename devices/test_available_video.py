@@ -1,3 +1,6 @@
+# import sys
+# sys.path.append("../")
+
 from tqdm import tqdm
 from core.Camera import Camera
 from core.speed.SpeedEstimator import SpeedEstimator

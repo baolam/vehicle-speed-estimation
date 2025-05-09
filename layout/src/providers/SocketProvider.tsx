@@ -41,15 +41,20 @@ const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
 
     setSocket(newSocket);
     newSocket.on('device-connected', () => {
+      // eslint-disable-next-line
       console.log('Thiết bị đã kết nối!');
     });
 
     newSocket.on('device-disconnected', () => {
+      // eslint-disable-next-line
       console.log('Thiết bị mất kết nối');
     });
 
     newSocket.on('disconnect', () => {
-      newSocket.close();
+      // newSocket.close();
+      // alert('Mất kết nốt bất ngờ!');
+      // eslint-disable-next-line
+      console.log('Mất kết nối tới server!');
     });
 
     return () => {

@@ -17,6 +17,7 @@ class UserSocket {
    */
   assgnIo(_io) {
     this._io = _io;
+
     _io.use((socket, next) => {
       try {
         const token = socket.handshake.auth.Authorization.split(" ")[1];

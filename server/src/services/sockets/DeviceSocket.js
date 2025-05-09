@@ -2,6 +2,8 @@ const jwt = require("jsonwebtoken");
 const events = require("events");
 
 const deviceModel = require("../../models/DeviceModel");
+const Vehicle = require("../../models/VehicleModel");
+const SpeedHistoryModel = require("../../models/SpeedHistoryModel");
 
 class DeviceSocket {
   constructor() {
@@ -24,13 +26,22 @@ class DeviceSocket {
     _io.on("connection", (socket) => {
       socket.on("response-user", (data) => this.#onHandlingResponseUser(data));
 
+      socket.on("streaming", (hotImg) =>
+        this.#onHandlingStreamingImage(hotImg, socket)
+      );
+
+      socket.on("overspeed", async (infor) =>
+        this.#onHandlingOverSpeed(infor, socket)
+      );
+
       socket.on("disconnect", () => {
         console.log("Device disconnected");
         this.events.emit("on-disconnect-device", {
           userId: socket.infor,
           socketId: socket.id,
         });
-        this.sockets[socket.infor] = undefined;
+
+        delete this.sockets[socket.infor.userId];
       });
     });
   }
@@ -52,8 +63,57 @@ class DeviceSocket {
 
   #onHandlingResponseUser(data) {
     const { result, event, socketId } = data;
-    console.log(this.#getManagement());
     this.#getManagement().sendDataToUser(socketId, event, result);
+  }
+
+  /**
+   *
+   * @param {*} hotImg
+   * @param {*} socket
+   * @description
+   * Stream kết quả trực tiếp từ thiết bị lên giao diện
+   * @returns
+   */
+  #onHandlingStreamingImage(hotImg, socket) {
+    const { userId } = socket.infor;
+    const onlineUsers = this.#getManagement().getUserSocket(userId);
+    // console.log(onlineUsers);
+    if (onlineUsers === undefined) return;
+
+    for (let i = 0; i < onlineUsers.length; i++) {
+      const { socketId } = onlineUsers[i];
+      this.#getManagement().sendDataToUser(socketId, "streaming", hotImg);
+    }
+  }
+
+  async #onHandlingOverSpeed(infor, socket) {
+    const { licensePlate, speed, time, embed_img } = infor;
+    const { userId, deviceId } = socket.infor;
+
+    try {
+      const vehicleInfor = (
+        await Vehicle.findOne({
+          where: { licensePlate },
+        })
+      ).toJSON();
+
+      const vehicleId = vehicleInfor.id;
+
+      /// Thêm vào lịch sử tốc độ phương tiện
+      await SpeedHistoryModel.create({
+        vehicleId,
+        deviceId,
+        userId,
+        time,
+        speed,
+        embed_img,
+      });
+
+      /// Gửi thông báo đến user qua kết nối (cài đặt ở điện thoại)
+      console.log("Còn thực hiện ở đây!");
+    } catch (err) {
+      console.log("Biển số chưa được đăng ký!");
+    }
   }
 
   /**

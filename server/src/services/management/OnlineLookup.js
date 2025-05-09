@@ -6,9 +6,6 @@ const userModel = require("../../models/UserModel");
 
 class OnlineLookup {
   constructor() {
-    // this._device = Device;
-    // this._user = User;
-
     Device.events.addListener("on-new-device", this.#onHandlingNewDevice);
     User.events.addListener("on-new-user", this.#onHandlingNewUser);
     Device.events.addListener(
@@ -102,9 +99,9 @@ class OnlineLookup {
   }
 
   sendDataToUser(userSocket, event, data = null) {
-    console.log(
-      `Try to send event '${event}' to user with socketId: ${userSocket} and data: ${data}`
-    );
+    // console.log(
+    //   `Try to send event '${event}' to user with socketId: ${userSocket} and data: ${data}`
+    // );
     if (data != null) User._io.to(userSocket).emit(event, data);
     else User._io.to(userSocket).emit(event);
   }

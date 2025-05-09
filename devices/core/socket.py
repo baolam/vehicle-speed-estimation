@@ -32,7 +32,7 @@ def exit_program(signal_received=None, frame=None):
 def socket_connected():
     print("Connected to server successfully!")
 
-def socket_disconnected():
+def socket_disconnected(a):
     print("Stopped by server!")
     exit_program()
 

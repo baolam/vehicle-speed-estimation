@@ -15,6 +15,7 @@ const PORT = process.env.PORT || 3000;
 const ADDR = `http://${ip.address()}:${PORT}`;
 
 const cors = require("cors");
+const path = require("path");
 
 /// Cài đặt một số middlewares
 app.use(cors({ origin: "*" }));
@@ -27,13 +28,14 @@ app.use(express.static(__dirname + "/src/build"));
 require("./src/routes/routes")(app);
 
 // Cài đặt giao diện
-app.get("/", (req, res) => {
-  res.sendFile("index.html");
+app.use((req, res) => {
+  res.sendFile(path.join(__dirname, "src", "build", "index.html"));
 });
 
 /// Cài đặt socket.io
 const io = new socketio.Server(server, {
   cors: { origin: "*", methods: ["GET", "POST"] },
+  maxHttpBufferSize: 1e6,
 });
 const userIo = io.of("/socket/user");
 const deviceIo = io.of("/socket/device");

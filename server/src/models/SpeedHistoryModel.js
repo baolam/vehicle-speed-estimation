@@ -34,6 +34,10 @@ const SpeedHistoryModel = Database.define("speed_history", {
   speed: {
     type: DataTypes.DECIMAL(10, 2),
   },
+  embed_img: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
 });
 
 module.exports = SpeedHistoryModel;

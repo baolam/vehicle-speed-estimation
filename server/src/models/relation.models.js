@@ -23,3 +23,7 @@ DeviceModel.belongsTo(UserModel, {
   foreignKey: "assgnCode",
   // as: "user",
 });
+
+VehicleModel.hasMany(SpeedHistory, {
+  foreignKey: "vehicleId",
+});
