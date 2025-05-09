@@ -25,7 +25,11 @@ const VehicleList: React.FC<IProps> = ({ onChooseId, vehicleId }) => {
           </tr>
         </thead>
         <tbody>
-          {vehicles.length === 0 && <p>No data</p>}
+          {vehicles.length === 0 && (
+            <tr>
+              <td>No data</td>
+            </tr>
+          )}
           {vehicles.map((vehicle) => (
             <tr
               key={vehicle.id}

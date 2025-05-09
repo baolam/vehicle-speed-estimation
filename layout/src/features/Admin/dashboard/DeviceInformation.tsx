@@ -7,12 +7,13 @@ import {
 } from '../admin.store';
 import { getDetailDevice } from '../admin.api';
 import { SocketContext } from '../../../providers/SocketProvider';
+import { useAppSelector } from '../../../hooks/redux.hook';
 
-interface IProps {
-  deviceCode: string;
-}
+// interface IProps {
+//   // deviceCode: string;
+// }
 
-const DeviceInformation: React.FC<IProps> = ({ deviceCode }) => {
+const DeviceInformation = () => {
   const [deviceInfo, setDeviceInfo] = useState<IDeviceInfo | null>(null);
   const [targetDeviceId, setTargetDeviceId] = useState('');
   const [enhancerMethod, setEnhancerMethod] = useState<IEnhancerMethod | null>(
@@ -22,6 +23,7 @@ const DeviceInformation: React.FC<IProps> = ({ deviceCode }) => {
     useState<ISpeedEstimatorMethod | null>(null);
 
   const { socket } = useContext(SocketContext);
+  const { deviceCode } = useAppSelector((state) => state.admin.deviceSelected);
 
   useEffect(() => {
     if (deviceCode === '') return;
@@ -82,6 +84,7 @@ const DeviceInformation: React.FC<IProps> = ({ deviceCode }) => {
     if (requested) {
       // alert('Request infor successfully!');
     } else {
+      // eslint-disable-next-line
       alert('Data existed! Request failed!');
     }
   };

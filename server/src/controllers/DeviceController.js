@@ -119,6 +119,41 @@ class DeviceController {
       return res.status(500).json({ message: "Error fetching device" });
     }
   }
+
+  /**
+   *
+   * @param {*} req
+   * @param {*} res
+   * @description
+   * Lấy danh sách toàn bộ thiết bị gắn với 1 người dùng cụ thể
+   */
+  async onGetAllDeviceUserId(req, res) {
+    try {
+      const { userId } = req.infor;
+      const raw_data = await deviceModel.findAll({
+        where: {
+          assgnCode: userId,
+        },
+      });
+
+      const data = await Promise.all(
+        raw_data.map(async (raw) => {
+          return {
+            ...raw.toJSON(),
+            password: undefined,
+            online:
+              (await onlineManagement.getDeviceInfor(raw.deviceCode)) !==
+              undefined,
+          };
+        })
+      );
+
+      res.status(200).json(data);
+    } catch (err) {
+      console.log(err);
+      res.status(400).json({ message: "Unexpected error!" });
+    }
+  }
 }
 
 module.exports = DeviceController;

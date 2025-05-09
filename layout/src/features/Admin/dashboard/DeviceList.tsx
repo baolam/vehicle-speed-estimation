@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useId, useState } from 'react';
 import { Table, ButtonGroup, Button, Form, InputGroup } from 'react-bootstrap';
 import { getAllDevices } from '../admin.api';
-import { IDeviceListManagement } from '../admin.store';
+import { IDeviceListManagement, onUpdateDeviceCode } from '../admin.store';
 import PaginationComponent from '../../../components/PaginationComponent';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux.hook';
 
-interface IProps {
-  onChooseId: (_id: string) => void;
-  deviceCode: string;
-}
+// interface IProps {
+//   // onChooseId: (_id: string) => void;
+//   // deviceCode: string;
+// }
 
-const DeviceList: React.FC<IProps> = ({ onChooseId, deviceCode }) => {
+const DeviceList = () => {
   const [lists, setLists] = useState<IDeviceListManagement[] | null>(null);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
+  const id = useId();
+  const { deviceCode } = useAppSelector((state) => state.admin.deviceSelected);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     getAllDevices(page)
@@ -55,7 +59,7 @@ const DeviceList: React.FC<IProps> = ({ onChooseId, deviceCode }) => {
           {lists !== null &&
             lists.map((device) => (
               <tr
-                key={device.deviceCode}
+                key={`${id}_${device.deviceCode}`}
                 className={
                   device.deviceCode === deviceCode ? 'table-primary' : ''
                 }
@@ -68,7 +72,9 @@ const DeviceList: React.FC<IProps> = ({ onChooseId, deviceCode }) => {
                   <ButtonGroup>
                     <Button
                       variant="primary"
-                      onClick={() => onChooseId(device.deviceCode)}
+                      onClick={() =>
+                        dispatch(onUpdateDeviceCode(device.deviceCode))
+                      }
                     >
                       Choose
                     </Button>

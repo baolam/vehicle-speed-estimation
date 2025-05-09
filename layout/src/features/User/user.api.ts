@@ -1,8 +1,9 @@
 import { AxiosResponse } from 'axios';
 import axiosClient from '../../config/axiosClient';
-import { IUserDetail, IUserInfo } from './user.store';
+import { IDeviceUser, IUserDetail, IUserInfo } from './user.store';
 import { ILoginInfo } from './UserLogin';
 import { IUserRegisterInfo } from './UserRegister';
+// import { getDetailDevice } from '../Admin/admin.api';
 
 export const onLoginUser = (infor: ILoginInfo) => {
   return new Promise<{ token: string }>((resolve, reject) => {
@@ -37,7 +38,6 @@ export const onGetUserDetail = () => {
       .get('/user/detail')
       .then((resp: AxiosResponse<IUserDetail>) => resolve(resp.data))
       .catch((err) => {
-        console.log(err.response);
         reject(err);
       });
   });
@@ -53,3 +53,16 @@ export const createVehicle = () => {
 };
 
 export const onGetVehicleList = () => {};
+
+export const onGetAllDevice = () => {
+  return new Promise<IDeviceUser[]>((resolve, reject) => {
+    axiosClient
+      .get('/device/all/user')
+      .then((resp: AxiosResponse<IDeviceUser[]>) => resolve(resp.data))
+      .catch((err) => reject(err));
+  });
+};
+
+// export const onGetDeviceDetail = (deviceCode: string) => {
+//   return getDetailDevice(deviceCode);
+// };

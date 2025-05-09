@@ -11,5 +11,6 @@ Router.post("/register", authenticate, isAdmin, deviceController.onRegister);
 Router.post("/login", deviceController.onLogin);
 Router.get("/all", authenticate, isAdmin, deviceController.onGetAllDevice);
 Router.get("/detail/:deviceCode", authenticate, deviceController.onGetDetail);
+Router.get("/all/user", authenticate, deviceController.onGetAllDeviceUserId);
 
 module.exports = Router;

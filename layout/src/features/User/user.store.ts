@@ -11,6 +11,15 @@ export interface IDeviceInfo {
   deviceCode: number;
 }
 
+export interface IDeviceUser {
+  id: number;
+  deviceCode: string;
+  street: string;
+  createdAt: Date;
+  updatedAt: Date;
+  online: boolean;
+}
+
 export interface IVechicleInfo {
   id: number;
   licensePlate: string;
@@ -34,6 +43,9 @@ export interface IUserInfoState {
     error: string | null;
   };
   userDetail: IUserDetail;
+  deviceSelected: {
+    deviceCode: string;
+  };
 }
 
 export const retrieveUserInfo = createAsyncThunk<IUserDetail>(
@@ -61,6 +73,9 @@ const initialState = {
     userRole: '',
     username: '',
   },
+  deviceSelected: {
+    deviceCode: '',
+  },
 };
 
 const userSlice = createSlice({
@@ -79,6 +94,13 @@ const userSlice = createSlice({
       userDetail: {
         ...state.userDetail,
         vehicles: [...state.userDetail.vehicles, action.payload],
+      },
+    }),
+    updateChoosenDevice: (state, action: PayloadAction<string>) => ({
+      ...state,
+      deviceSelected: {
+        ...state.deviceSelected,
+        deviceCode: action.payload,
       },
     }),
   },
@@ -109,5 +131,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { logoutAction, updateVehicle } = userSlice.actions;
+export const { logoutAction, updateVehicle, updateChoosenDevice } =
+  userSlice.actions;
 export default userSlice.reducer;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Alert } from 'react-bootstrap';
 import { useAppSelector } from '../../../hooks/redux.hook';
 
 interface IProps {
@@ -12,7 +13,13 @@ const VehicleDetail: React.FC<IProps> = ({ id }) => {
   return (
     <>
       {vehicle === undefined && <div>Vehicle not found</div>}
-      {vehicle && <p>Data found</p>}
+      {vehicle && (
+        <>
+          <h4 className="text-center">Some information</h4>
+          <Alert>Vehicle type: {vehicle.vehicleType}</Alert>
+          <Alert>Vehicle license plate: {vehicle.licensePlate}</Alert>
+        </>
+      )}
     </>
   );
 };

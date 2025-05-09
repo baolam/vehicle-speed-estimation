@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface IUserManagement {
   id: number;
@@ -113,7 +113,16 @@ const initialState: IAdminState = {
 const adminSlice = createSlice({
   name: 'admin',
   initialState,
-  reducers: {},
+  reducers: {
+    onUpdateDeviceCode: (state, action: PayloadAction<string>) => ({
+      ...state,
+      deviceSelected: {
+        ...state.deviceSelected,
+        deviceCode: action.payload,
+      },
+    }),
+  },
 });
 
+export const { onUpdateDeviceCode } = adminSlice.actions;
 export default adminSlice.reducer;

@@ -74,18 +74,22 @@ class OnlineLookup {
   }
 
   async getDeviceInfor(deviceCode) {
-    const deviceInfor = (
-      await deviceModel.findOne({
-        where: { deviceCode },
-        include: [userModel],
-      })
-    ).toJSON();
+    try {
+      const deviceInfor = (
+        await deviceModel.findOne({
+          where: { deviceCode },
+          include: [userModel],
+        })
+      ).toJSON();
 
-    const userId = deviceInfor.user.id;
-    const infors = this.getDeviceSocket(userId);
-    const wanna = infors.find((infor) => infor.deviceId === deviceInfor.id);
+      const userId = deviceInfor.user.id;
+      const infors = this.getDeviceSocket(userId);
+      const wanna = infors.find((infor) => infor.deviceId === deviceInfor.id);
 
-    return wanna;
+      return wanna;
+    } catch {
+      return undefined;
+    }
   }
 
   sendDataToDevice(deviceSocket, event, data = null) {

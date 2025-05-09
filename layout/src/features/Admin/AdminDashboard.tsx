@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Col, Row, Tab } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import Functions from './dashboard/Functions';
@@ -12,7 +12,6 @@ import DeviceInformation from './dashboard/DeviceInformation';
 const AdminDashboard = () => {
   const { login } = useContext(LoginContext);
   const navigate = useNavigate();
-  const [deviceCode, setDeviceCode] = useState<string>('');
 
   useEffect(() => {
     if (!login) {
@@ -38,12 +37,12 @@ const AdminDashboard = () => {
               </Tab.Pane>
               <Tab.Pane eventKey="#device-list">
                 <DeviceList
-                  deviceCode={deviceCode}
-                  onChooseId={(_id: string) => setDeviceCode(_id)}
+                // deviceCode={deviceCode}
+                // onChooseId={(_id: string) => setDeviceCode(_id)}
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="#device-information">
-                <DeviceInformation deviceCode={deviceCode} />
+                <DeviceInformation />
               </Tab.Pane>
             </Tab.Content>
           </Col>
