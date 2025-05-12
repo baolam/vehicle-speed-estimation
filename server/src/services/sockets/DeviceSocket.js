@@ -113,6 +113,7 @@ class DeviceSocket {
       console.log("Còn thực hiện ở đây!");
     } catch (err) {
       console.log("Biển số chưa được đăng ký!");
+      console.table({ ...infor, embed_img: undefined });
     }
   }
 
